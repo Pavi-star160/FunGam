@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eruma Maadu 🐃💕</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink-1:#ffd6e8;
+    --pink-2:#ffb6cf;
+    --pink-3:#ff8fb3;
+    --card-bg:#fffaf9;
+    --text-dark:#5c2a3a;
+    --text-soft:#8a5468;
+    --yes:#3fb87f;
+    --yes-dark:#2f9c69;
+    --no:#ff5c8a;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --pink-1:#3a1f2b;
+      --pink-2:#4a1f33;
+      --pink-3:#ff8fb3;
+      --card-bg:#241318;
+      --text-dark:#ffe3ee;
+      --text-soft:#e2a9bf;
+    }
+  }
+  :root[data-theme="dark"]{
+    --pink-1:#3a1f2b;
+    --pink-2:#4a1f33;
+    --pink-3:#ff8fb3;
+    --card-bg:#241318;
+    --text-dark:#ffe3ee;
+    --text-soft:#e2a9bf;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    height:100%;
+    background: linear-gradient(160deg, var(--pink-1), var(--pink-2) 60%, var(--pink-3));
+    font-family:'Poppins', sans-serif;
+    overflow-x:hidden;
+  }
+  body{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    position:relative;
+  }
+
+  .floaters{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:0;
+  }
+  .floaters span{
+    position:absolute;
+    bottom:-10%;
+    font-size:22px;
+    opacity:0.55;
+    animation:rise linear infinite;
+  }
+  @keyframes rise{
+    0%{ transform:translateY(0) rotate(0deg); opacity:0.6;}
+    100%{ transform:translateY(-110vh) rotate(25deg); opacity:0;}
+  }
+
+  .card{
+    position:relative;
+    z-index:1;
+    background:var(--card-bg);
+    border-radius:32px;
+    padding:48px 36px 40px;
+    width:100%;
+    max-width:420px;
+    text-align:center;
+    box-shadow:0 20px 60px rgba(140,40,80,0.25);
+    animation:pop 0.6s cubic-bezier(.2,1.3,.4,1) both;
+  }
+  @keyframes pop{
+    from{ transform:scale(0.85); opacity:0;}
+    to{ transform:scale(1); opacity:1;}
+  }
+
+  .buffalo{
+    font-size:64px;
+    display:inline-block;
+    animation:wiggle 2.4s ease-in-out infinite;
+  }
+  @keyframes wiggle{
+    0%,100%{ transform:rotate(-6deg);}
+    50%{ transform:rotate(6deg);}
+  }
+
+  h1{
+    font-family:'Caveat', cursive;
+    font-size:2.6rem;
+    color:var(--text-dark);
+    margin:10px 0 4px;
+    line-height:1.1;
+  }
+  .subtitle{
+    color:var(--text-soft);
+    font-size:0.95rem;
+    margin:0 0 28px;
+  }
+
+  .button-row{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    min-height:64px;
+  }
+
+  button{
+    border:none;
+    cursor:pointer;
+    font-family:'Poppins', sans-serif;
+    font-weight:600;
+    border-radius:999px;
+    padding:16px 32px;
+    font-size:1.05rem;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  button:focus-visible{
+    outline:3px solid var(--text-dark);
+    outline-offset:3px;
+  }
+
+  #yesBtn{
+    background:var(--yes);
+    color:#fff;
+    box-shadow:0 10px 24px rgba(63,184,127,0.45);
+  }
+  #yesBtn:hover{
+    transform:translateY(-2px) scale(1.04);
+    background:var(--yes-dark);
+  }
+  #yesBtn:active{
+    transform:scale(0.97);
+  }
+
+  #noBtn{
+    background:var(--no);
+    color:#fff;
+    box-shadow:0 8px 18px rgba(255,92,138,0.35);
+    position:relative;
+    white-space:nowrap;
+  }
+
+  #noBtn.escaping{
+    position:fixed;
+    z-index:5;
+  }
+
+  .no-caption{
+    margin-top:10px;
+    font-size:0.85rem;
+    color:var(--text-soft);
+    min-height:20px;
+  }
+
+  .result{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
+  }
+  .result.show{
+    display:flex;
+  }
+  .button-row.hide, .subtitle.hide{
+    display:none;
+  }
+
+  .result h2{
+    font-family:'Caveat', cursive;
+    font-size:2.4rem;
+    color:var(--text-dark);
+    margin:8px 0 0;
+  }
+  .result p{
+    color:var(--text-soft);
+    font-size:0.95rem;
+    margin:0;
+    max-width:320px;
+  }
+  .big-heart{
+    font-size:56px;
+    animation:beat 1s ease-in-out infinite;
+  }
+  @keyframes beat{
+    0%,100%{ transform:scale(1);}
+    50%{ transform:scale(1.18);}
+  }
+
+  .confetti{
+    position:fixed;
+    top:-40px;
+    font-size:20px;
+    pointer-events:none;
+    animation:fall linear forwards;
+    z-index:10;
+  }
+  @keyframes fall{
+    to{ transform:translateY(110vh) rotate(360deg); opacity:0.9;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .buffalo, #noBtn.escaping, .big-heart, .card, .floaters span{
+      animation:none !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="floaters" id="floaters"></div>
+
+<div class="card">
+  <div class="buffalo">🐃</div>
+  <h1 id="question">Do you love me,<br>Eruma Maadu?</h1>
+  <p class="subtitle" id="subtitle">Take your time. Choose wisely.</p>
+
+  <div class="button-row" id="buttonRow">
+    <button id="yesBtn">Yes 💚</button>
+    <button id="noBtn">No</button>
+  </div>
+  <div class="no-caption" id="noCaption"></div>
+
+  <div class="result" id="result">
+    <div class="big-heart">💗</div>
+    <h2>I knew it, Eruma Maadu 🐃💕</h2>
+    <p>Now stop scrolling and go tell me that in person.</p>
+  </div>
+</div>
+
+<script>
+  const noBtn = document.getElementById('noBtn');
+  const yesBtn = document.getElementById('yesBtn');
+  const card = document.querySelector('.card');
+  const buttonRow = document.getElementById('buttonRow');
+  const subtitle = document.getElementById('subtitle');
+  const result = document.getElementById('result');
+  const noCaption = document.getElementById('noCaption');
+
+  const taunts = [
+    "nice try 🐃",
+    "not today",
+    "catch me if you can",
+    "wrong answer, try again",
+    "he really thought",
+    "run, don't walk",
+    "almost had it"
+  ];
+  let tauntIndex = 0;
+  let dodgeCount = 0;
+
+  function escapeNoButton(originClientX, originClientY){
+    if (!noBtn.classList.contains('escaping')){
+      const rect = noBtn.getBoundingClientRect();
+      noBtn.style.left = rect.left + 'px';
+      noBtn.style.top = rect.top + 'px';
+      noBtn.style.width = rect.width + 'px';
+      noBtn.classList.add('escaping');
+    }
+
+    const btnRect = noBtn.getBoundingClientRect();
+    const margin = 16;
+    const maxX = window.innerWidth - btnRect.width - margin;
+    const maxY = window.innerHeight - btnRect.height - margin;
+
+    let newX, newY, dist;
+    let attempts = 0;
+    do {
+      newX = margin + Math.random() * Math.max(1, (maxX - margin));
+      newY = margin + Math.random() * Math.max(1, (maxY - margin));
+      const dx = newX - (originClientX ?? newX);
+      const dy = newY - (originClientY ?? newY);
+      dist = Math.sqrt(dx*dx + dy*dy);
+      attempts++;
+    } while (dist < 150 && attempts < 12);
+
+    noBtn.style.left = newX + 'px';
+    noBtn.style.top = newY + 'px';
+
+    dodgeCount++;
+    noCaption.textContent = taunts[tauntIndex % taunts.length];
+    tauntIndex++;
+
+    if (dodgeCount >= 3){
+      yesBtn.style.transform = `scale(${Math.min(1.5, 1 + dodgeCount * 0.05)})`;
+    }
+  }
+
+  noBtn.addEventListener('mouseenter', (e) => {
+    escapeNoButton(e.clientX, e.clientY);
+  });
+  noBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    escapeNoButton(e.clientX, e.clientY);
+  });
+  noBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    const t = e.touches[0];
+    escapeNoButton(t ? t.clientX : undefined, t ? t.clientY : undefined);
+  }, {passive:false});
+
+  function burstConfetti(){
+    const emojis = ['💗','💕','🐃','✨','💐','💖'];
+    for (let i=0; i<28; i++){
+      const el = document.createElement('div');
+      el.className = 'confetti';
+      el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      el.style.left = Math.random()*100 + 'vw';
+      el.style.animationDuration = (2.5 + Math.random()*2) + 's';
+      el.style.fontSize = (16 + Math.random()*16) + 'px';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 5000);
+    }
+  }
+
+  yesBtn.addEventListener('click', () => {
+    buttonRow.classList.add('hide');
+    subtitle.classList.add('hide');
+    noCaption.textContent = '';
+    result.classList.add('show');
+    burstConfetti();
+  });
+
+  // gentle floating background emojis
+  const floaters = document.getElementById('floaters');
+  const floatEmojis = ['💗','🐃','💕','✨'];
+  for (let i=0; i<14; i++){
+    const s = document.createElement('span');
+    s.textContent = floatEmojis[Math.floor(Math.random()*floatEmojis.length)];
+    s.style.left = Math.random()*100 + 'vw';
+    s.style.animationDuration = (8 + Math.random()*10) + 's';
+    s.style.animationDelay = (Math.random()*10) + 's';
+    s.style.fontSize = (16 + Math.random()*18) + 'px';
+    floaters.appendChild(s);
+  }
+</script>
+
+</body>
+</html>
